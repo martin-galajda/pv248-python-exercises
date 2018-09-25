@@ -1,7 +1,0 @@
-17
-16th century: 3
-17th century: 11
-18th century: 29
-19th century: 3
-20th century: 16
-21th century: 2
