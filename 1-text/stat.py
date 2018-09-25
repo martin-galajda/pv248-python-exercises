@@ -52,7 +52,8 @@ def parse_composers(composers_line):
   clean_composers = []
   parsed_composers = re.sub(regexps['composer_extra_stuff_2'], '', str_composers).split(';')
   for parsed_composer in parsed_composers:
-    clean_composers += [parsed_composer.strip()]
+    if len(parsed_composer.strip()) > 0:
+      clean_composers += [parsed_composer.strip()]
 
   return clean_composers
 
@@ -93,4 +94,4 @@ if option == "century":
 
 if option == "composer":
   for k, v in stats['composers'].items():
-    safe_print_str(k + ": " + str(v))
+    print(k + ": " + str(v))
