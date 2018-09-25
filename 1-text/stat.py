@@ -72,7 +72,7 @@ def parse_composers(composers_line):
 
 # Convert year to century
 def century_from_year(year):
-  return (year) // 100 + 1    # 1 because 2017 is 21st century, and 1989 = 20th century
+  return ((year - 1) // 100) + 1    # 1 because 2017 is 21st century, and 1989 = 20th century
 
 def parse_composition_century(composition_year_line):
   # remove days & months from line if it contains it ("dd. mm. YYYY" -> "YYYY")
