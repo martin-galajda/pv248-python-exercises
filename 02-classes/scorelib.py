@@ -73,7 +73,7 @@ class Edition:
       print("Edition: %s" % (self.name if self.name is not None else ""))
   def print_editors(self):
     if len(self.authors) > 0 or print_empty_lines:
-      editors_str = ','.join([editor.format() for editor in self.authors])
+      editors_str = ', '.join([editor.format() for editor in self.authors])
       print("Editor: %s" % editors_str)
   def print_voices(self):
     self.composition.print_voices()
@@ -190,10 +190,14 @@ def parse_editors(print_instance, editor_str):
 
   if len(token_names) > 2:
     if len(token_names) % 2 == 1:
-      print("Invalid !!!")
-    for i in range(len(token_names)):
-      if i % 2 == 1:
-        names += [token_names[i-1] + token_names[i]]
+      # Let's assume that it contains just names for different people
+      for i in range(len(token_names)):
+        names += [token_names[i].strip()]
+    else:
+      # Let'assume that it contains names which have first and last names separated by ',' for same person
+      for i in range(len(token_names)):
+        if i % 2 == 1:
+          names += [token_names[i-1].strip() + ', ' + token_names[i].strip()]
   elif len(token_names) == 2:
     first_token_name = token_names[0]
     snd_token_name = token_names[1]
@@ -240,12 +244,13 @@ class ScoreLibParser:
     with open(self.filename) as f:
       for line in f:
         if len(line.strip()) == 0:
-          if len(new_print_block) >=1:
-            self.print_blocks += [new_print_block]
+          self.print_blocks += [new_print_block]
           new_print_block = []
         else:
           new_print_block += [line]
-    self.print_blocks += [new_print_block]
+
+    if len(new_print_block) >=1:
+      self.print_blocks += [new_print_block]
 
 
   def parse_prints(self):
@@ -253,7 +258,8 @@ class ScoreLibParser:
 
     prints = []
     for print_block_lines in self.print_blocks:
-      prints += [self.parse_print_block(print_block_lines)]
+      if len(print_block_lines) >=1:
+        prints += [self.parse_print_block(print_block_lines)]
 
     return prints
 
