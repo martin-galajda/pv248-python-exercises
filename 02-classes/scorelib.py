@@ -249,7 +249,7 @@ class ScoreLibParser:
         else:
           new_print_block += [line]
 
-    if len(new_print_block) >=1:
+    if len(new_print_block) >= 1:
       self.print_blocks += [new_print_block]
 
 
@@ -258,7 +258,7 @@ class ScoreLibParser:
 
     prints = []
     for print_block_lines in self.print_blocks:
-      if len(print_block_lines) >=1:
+      if len(print_block_lines) >= 1:
         prints += [self.parse_print_block(print_block_lines)]
 
     return prints
