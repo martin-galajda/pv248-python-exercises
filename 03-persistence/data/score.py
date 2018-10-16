@@ -34,16 +34,6 @@ class Score():
     self.voices = voices
     self.authors = authors
 
-  def from_composition(self, composition):
-    self.id = None
-    self.name = composition.name
-    self.incipit = composition.incipit
-    self.key = composition.key
-    self.genre = composition.genre
-    self.year = composition.year
-    self.voices = composition.voices
-    self.authors = composition.authors
-
   def load_authors_from_db(self):
     results = self.db_conn.execute_and_fetch_one("""
       SELECT person.id, person.name, person.born, person.died
@@ -96,6 +86,9 @@ class Score():
 
     return new_score_data
 
+  def print_authors(self):
+    print("Authors: %s" % ','.join(map(lambda a: str((a.id, a.name)), self.authors)))
+
   def has_different_authors_or_voices(self, other_score_id):
     SELECT_AUTHORS_FROM_DB = """
       SELECT person.id, person.name
@@ -107,25 +100,14 @@ class Score():
 
     matching_authors = 0
     total_author_rows = 0
-    print("Fetched " + str(len(authors_from_db)) + " author rows")
     for author_row_from_db in authors_from_db:
       matches_author = any(map(lambda a: a.id == author_row_from_db[0], self.authors))
       if matches_author:
         matching_authors += 1
       total_author_rows += 1
 
-    different_authors = len(self.authors) != matching_authors or total_author_rows != len(self.authors)
-    print("Different authors " + ("true" if different_authors else "false"))
-    print("Matching authors " + str(matching_authors))
-    print("Total rows " + str(total_author_rows))
-
-    if different_authors:
-      if len(self.authors):
-        print(self.authors[0].id)
-        print(self.authors[0].name)
-      print(authors_from_db)
-
-    if different_authors:
+    has_different_authors = len(self.authors) != matching_authors or total_author_rows != len(self.authors)
+    if has_different_authors:
       return True
 
     SELECT_VOICES_FROM_DB = """
@@ -146,14 +128,9 @@ class Score():
         if curr_voice.name == voice_from_db_name and curr_voice.range == voice_from_db_range:
           matching_voices += 1
 
-    different_voices = len(self.voices) != matching_voices or total_voices_from_db != len(self.voices)
+    has_different_voices = len(self.voices) != matching_voices or total_voices_from_db != len(self.voices)
 
-    print("Different voice " + ("true" if different_voices else "false"))
-    print("Matching voices " + str(matching_voices))
-    print("Total rows " + str(total_voices_from_db))
-    print("Self voices " + str(len(self.voices)))
-
-    return different_voices
+    return has_different_voices
 
 
   def upsert(self):
@@ -199,11 +176,11 @@ class Score():
     if score_data_from_db is not None:
       other_score_id = score_data_from_db[0]
       if self.has_different_authors_or_voices(other_score_id):
-        score_data_from_db = self.insert()
-        print("Score found in db but different author or voice: " + str(self.name))
+        self.insert()
         created_new_score = True
       else:
-        self.id = score_data_from_db[0]
+        print("Using already found score: " + str((score_data_from_db[0], score_data_from_db[1])))
+        self.id = score_data_from_db[0] 
     elif score_data_from_db is None:
       score_data_from_db = self.insert()
       created_new_score = True

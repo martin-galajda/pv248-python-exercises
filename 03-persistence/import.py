@@ -1,6 +1,5 @@
 from scorelib import load
 from sql_helpers import load_sql_schema_def
-from sql import SELECT_SCORE_QUERY, INSERT_SCORE_STATEMENT, find_composition
 import sqlite3
 import sys
 from db.conn import DbConnection
@@ -14,8 +13,6 @@ print_instances = load(filename)
 
 def persist_print_instance(print_instance):
   print_instance.save_to_db()
-  pass
-
 
 # pylint: disable=E1101
 conn = DbConnection.instance()

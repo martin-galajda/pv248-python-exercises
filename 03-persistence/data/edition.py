@@ -69,7 +69,6 @@ class Edition:
 
     values += (self.composition.id, )
 
-
     data_from_db = self.db_conn.execute_and_fetch_one(SELECT_SQL, values)
     if data_from_db is not None:
       self.id = data_from_db[0]
@@ -86,28 +85,17 @@ class Edition:
 
     matching_authors = 0
     total_author_rows = 0
-    print("Fetched " + str(len(authors_from_db)) + " author rows")
     for author_row_from_db in authors_from_db:
       matches_author = any(map(lambda a: a.id == author_row_from_db[0], self.authors))
       if matches_author:
         matching_authors += 1
       total_author_rows += 1
 
-    different_authors = len(self.authors) != matching_authors or total_author_rows != len(self.authors)
-    print("Edition - Different authors " + ("true" if different_authors else "false"))
-    print("Edition - Matching authors " + str(matching_authors))
-    print("Edition - Total rows " + str(total_author_rows))
+    has_different_authors = len(self.authors) != matching_authors or total_author_rows != len(self.authors)
+    if has_different_authors:
+      self.print_editors()
 
-    if different_authors:
-      if len(self.authors):
-        print(self.authors[0].id)
-        print(self.authors[0].name)
-      print(authors_from_db)
-
-    if different_authors:
-      return True
-
-    return False
+    return has_different_authors
 
   def insert(self):
     INSERT_SQL = """
@@ -140,6 +128,7 @@ class Edition:
         self.insert()
       else:
         self.id = edition_data_from_db[0]
+        print("Edition - using already found edition: " + str((self.id, self.name)))
     else:
       self.insert()
 

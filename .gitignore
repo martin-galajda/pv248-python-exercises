@@ -1,1 +1,4 @@
 __pycache__
+03-persistence/scorelib.dat
+**/tmp*
+**/*pyc

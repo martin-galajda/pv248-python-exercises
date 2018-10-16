@@ -2,7 +2,7 @@
 create table person ( id integer primary key not null,
                       born integer,
                       died integer,
-                      name varchar not null );
+                      name varchar not null UNIQUE );
 
 -- Stores info about a single score. Since some of the scores in the library
 -- have multiple compositions in them, author data is stored in a separate

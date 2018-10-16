@@ -38,7 +38,6 @@ class Person:
     created_new = False
     if person_from_db is not None and (self.born is not None or self.died is not None):
       self.id = person_from_db[0]
-      print("Updating person")
 
       UPDATE_SQL = """
         UPDATE person
@@ -60,7 +59,6 @@ class Person:
 
       self.db_conn.execute_and_fetch_one(UPDATE_SQL, values)
     elif person_from_db is None:
-      print("Creating new person")
       new_id = self.db_conn.insert("""
         INSERT INTO person (name, born, died)
         VALUES (?, ?, ?)
