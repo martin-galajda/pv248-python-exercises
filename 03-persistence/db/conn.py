@@ -8,9 +8,8 @@ def get_db_conn(filename = 'scorelib.dat'):
 
 @Singleton
 class DbConnection():
-
-  def __init__(self):
-    self._conn = get_db_conn()
+  def init(self, db_filename):
+    self._conn = get_db_conn(db_filename)
     self._cursor = self._conn.cursor()
 
   def insert(self, sql, values):

@@ -16,6 +16,7 @@ def persist_print_instance(print_instance):
 
 # pylint: disable=E1101
 conn = DbConnection.instance()
+conn.init(output_filename)
 schema_sql = load_sql_schema_def()
 conn.executescript(schema_sql)
 
