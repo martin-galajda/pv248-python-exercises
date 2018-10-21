@@ -1,7 +1,7 @@
 import sqlite3
 from decorators.singleton import Singleton
 
-def get_db_conn(filename = 'scorelib.dat'):
+def get_db_conn(filename):
   conn = sqlite3.connect(filename)
 
   return conn

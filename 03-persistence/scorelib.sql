@@ -1,3 +1,11 @@
+DROP TABLE IF EXISTS person;
+DROP TABLE IF EXISTS score;
+DROP TABLE IF EXISTS voice;
+DROP TABLE IF EXISTS edition;
+DROP TABLE IF EXISTS score_author;
+DROP TABLE IF EXISTS edition_author;
+DROP TABLE IF EXISTS print;
+
 -- A table that stores a person: could be either a composer or an editor.
 create table person ( id integer primary key not null,
                       born integer,

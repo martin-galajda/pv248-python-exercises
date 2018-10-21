@@ -34,6 +34,11 @@ class Score():
     self.voices = voices
     self.authors = authors
 
+  def print_voices(self):
+    for voice_idx in range(len(self.voices)):
+      voice = self.voices[voice_idx]
+      print("Voice %d: %s" % (voice.number, voice.format()))
+
   def load_authors_from_db(self):
     results = self.db_conn.execute_and_fetch_one("""
       SELECT person.id, person.name, person.born, person.died
@@ -124,7 +129,7 @@ class Score():
 
       (voice_from_db_id, voice_from_db_number, voice_from_db_name, voice_from_db_range) = voice_row_from_db
       if len(self.voices) > voice_from_db_number:
-        curr_voice = self.voices[voice_from_db_number]
+        curr_voice = self.voices[voice_from_db_number-1]
         if curr_voice.name == voice_from_db_name and curr_voice.range == voice_from_db_range:
           matching_voices += 1
 
@@ -141,7 +146,7 @@ class Score():
         print("Id for author is none!!!")
 
     for idx, voice in enumerate(self.voices):
-      self.voices[idx].number = idx
+      self.voices[idx].number = idx + 1
 
     sql_str  = """
       SELECT score.id, score.name, genre, key, incipit, score.year
