@@ -20,7 +20,7 @@ conn = DbConnection.instance()
 conn.init(DB_NAME)
 
 SQL_SELECT_ALL_PRINTS = """
-  SELECT DISTINCT(composer.id) as composerId
+  SELECT DISTINCT composer.id as composerId, composer.name as composerName
   FROM print
   INNER JOIN edition ON print.edition = edition.id
   INNER JOIN score ON edition.score = score.id
@@ -69,12 +69,14 @@ all_matching_composers = conn.execute_and_fetch_all(SQL_SELECT_ALL_PRINTS, (sear
 
 matching_composers_ids = []
 print_instances = {}
-for matching_composer_id_db in all_matching_composers:
-  composerId = matching_composer_id_db[0]
+for matching_composer_db in all_matching_composers:
+  composer_id = matching_composer_db[0]
+  composer_name = matching_composer_db[1]
+  composer_prints = conn.execute_and_fetch_all(SQL_SELECT_PRINTS_FOR_COMPOSER, (composer_id,))
 
-  composer_prints = conn.execute_and_fetch_all(SQL_SELECT_PRINTS_FOR_COMPOSER, (composerId,))
-
-  print_instances[composerId] = []
+  if composer_name not in print_instances:
+    print_instances[composer_name] = []
+    
   for composer_print_db in composer_prints:
     (printId, printPartiture, editionId, editionName, publicationYear, scoreId, scoreName, scoreGenre, scoreKey, scoreIncipit, scoreYear) = composer_print_db
 
@@ -105,12 +107,8 @@ for matching_composer_id_db in all_matching_composers:
     edition = Edition(composition=score, authors = editors, name = editionName)
     print_instance = Print(edition=edition, print_id = printId, partiture=(True if printPartiture == 'Y' else False))
 
-    print_instances[composerId] += [print_instance]
+    print_instances[composer_name] += [print_instance]
 
 conn.close()
 
-all_prints = []
-for composer_prints in print_instances.values():
-  all_prints += composer_prints
-
-print(to_pretty_json(all_prints))
+print(to_pretty_json(print_instances))
