@@ -49,6 +49,7 @@ class Print:
       "Composer": self.composition().authors,
       "Title": self.composition().name,
       "Genre": self.composition().genre,
+      "Composition Year": self.composition().year,
       "Edition": self.edition.name,
       "Editor": self.edition.authors,
       "Partiture": self.partiture,
