@@ -115,13 +115,20 @@ class Edition:
 
     self.composition.upsert()
 
+    values = ()
     SELECT_EDITION_SQL = """
       SELECT id, name, score
       FROM edition
       WHERE name = ? AND score = ?;
     """
 
-    edition_data_from_db = self.db_conn.execute_and_fetch_one(SELECT_EDITION_SQL, (self.name, self.composition.id))
+    if self.name is not None:
+      values += (self.name,)
+    else:
+      SELECT_EDITION_SQL = re.compile(r' name = \?').sub(' name is NULL', SELECT_EDITION_SQL)
+
+
+    edition_data_from_db = self.db_conn.execute_and_fetch_one(SELECT_EDITION_SQL, values + (self.composition.id,))
 
     if edition_data_from_db is not None:
       if self.has_different_authors(edition_data_from_db[0]):
