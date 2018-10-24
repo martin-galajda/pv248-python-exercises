@@ -128,7 +128,7 @@ class Score():
       total_voices_from_db += 1
 
       (voice_from_db_id, voice_from_db_number, voice_from_db_name, voice_from_db_range) = voice_row_from_db
-      if len(self.voices) > voice_from_db_number:
+      if len(self.voices) >= voice_from_db_number:
         curr_voice = self.voices[voice_from_db_number-1]
         if curr_voice.name == voice_from_db_name and curr_voice.range == voice_from_db_range:
           matching_voices += 1
