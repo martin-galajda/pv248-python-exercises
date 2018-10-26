@@ -97,11 +97,10 @@ for matching_composer_db in all_matching_composers:
 
     voices_db = conn.execute_and_fetch_all(SQL_SELECT_VOICES_FOR_SCORE, (scoreId,))
 
-    voices = list(range(len(voices_db)))
+    voices = []
     for voice_db in voices_db:
       (voiceId, voiceNumber, voiceRange, voiceName) = voice_db
-      voices[voiceNumber-1] = Voice(id = voiceId, name = voiceName, range = voiceRange, number = voiceNumber)
-
+      voices += [Voice(id = voiceId, name = voiceName, range = voiceRange, number = voiceNumber)]
 
     score = Score(id = scoreId, name = scoreName, incipit=scoreIncipit, key = scoreKey, genre = scoreGenre, year = scoreYear, voices = voices, authors=composers)
     edition = Edition(composition=score, authors = editors, name = editionName)
