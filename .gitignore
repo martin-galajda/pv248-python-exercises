@@ -4,3 +4,5 @@ __pycache__
 **/*pyc
 
 04-querying/scorelib.dat
+05-math/input.txt
+05-math/*.txt
