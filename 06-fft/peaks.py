@@ -40,8 +40,6 @@ def get_peaks_from_one_second_window(wave_file_handle, number_of_channels, frame
   return window_peaks
 
 with wave.open(sys.argv[1], 'rb') as file:
-  file = wave.open(sys.argv[1], 'rb')
-
   # number of frames per second (sampling frequency)
   frames_per_second = file.getframerate()
   number_of_channels = file.getnchannels()
