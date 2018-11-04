@@ -6,3 +6,5 @@ __pycache__
 04-querying/scorelib.dat
 05-math/input.txt
 05-math/*.txt
+
+06-fft/*.wav
