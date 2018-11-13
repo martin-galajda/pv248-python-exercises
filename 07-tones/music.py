@@ -44,6 +44,7 @@ def average_over_channels(frame_bytes, num_channels):
     new_frame_bytes += [averaged_frame_byte]
     idx += num_channels
 
+
   return new_frame_bytes
 
 def cluster_peaks(window_peaks):
@@ -108,7 +109,7 @@ def parse_tones_from_file(fundamental_freq, filename):
     if total_seconds >= 1:
       last_ten_windows_frames_bytes = parse_frames(wave_file_handle, frames_per_second, num_of_seconds = 1.0, num_of_channels = number_of_channels)
 
-    for _ in range(int(number_of_windows -1)):
+    while from_window_time + 1 <= total_seconds:
       if from_window_time + 1 > total_seconds:
         continue
       clustered_peaks = []
@@ -147,7 +148,7 @@ def parse_tones_from_file(fundamental_freq, filename):
       last_ten_windows_frames_bytes += last_window_frames_bytes
 
   for peak in all_peaks:
-    print('%.1f:%.1f %s' %(peak['from'], peak['to'], peak['tones_str']))
+    print('%.1f-%.1f %s' %(peak['from'], peak['to'], peak['tones_str']))
 
 
 if __name__ == "__main__":
