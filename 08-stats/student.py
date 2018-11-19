@@ -31,7 +31,16 @@ def add_days(d1, num_of_days):
 
 
 def process_student(enhanced_students_dataframe, student):
-  student_df = enhanced_students_dataframe.iloc[int(student)]
+  student_idx_in_dataframe = np.where(enhanced_students_dataframe[DataFrameEnums.STUDENT_COL_NAME] == float(student))
+
+  if len(student_idx_in_dataframe[0] == 1):
+    student_idx_in_dataframe = student_idx_in_dataframe[0]
+  elif len(student_idx_in_dataframe[0] > 1):
+    raise Exception("Found more than 1 student with id: " + str(student))
+  else:
+    raise Exception("Found no student with id: " + str(student))
+
+  student_df = enhanced_students_dataframe.iloc[student_idx_in_dataframe]
   
   regexp_extract_aggregated_date = r'%s%s(.*)' % (DataFrameEnums.AGGREGATED_PREFIX, DataFrameEnums.DATE_PREFIX)
   aggregated_cols_flags = [re.match(pattern=regexp_extract_aggregated_date, string = new_col) is not None for new_col in enhanced_students_dataframe.columns]
@@ -50,12 +59,12 @@ def process_student(enhanced_students_dataframe, student):
     curr_date_end = days_between(semester_start_date, date)
     
     X += [[curr_date_end]]
-    y += [student_df[aggregated_col]]
+    y += [float(student_df[aggregated_col])]
 
   
   slope = "inf"
   if y[-1] > 0:
-    slope, _, _, _ = np.linalg.lstsq(X, y)
+    slope, _, _, _ = np.linalg.lstsq(X, y, rcond=-1)
     slope = slope[0]
     # print(X)
     # print(y)
@@ -98,10 +107,10 @@ def process_student(enhanced_students_dataframe, student):
   exercise_cols = enhanced_students_dataframe.columns[exercise_cols_flags]
 
   dict_res = {
-    'mean': student_df[exercise_cols].mean(),
-    'median': np.median(student_df[exercise_cols]),
-    'passed': np.sum(student_df[exercise_cols] > 0),
-    'total': np.sum(student_df[exercise_cols]),
+    'mean': np.sum(student_df[exercise_cols].values) / float(len(exercise_cols)),
+    'median': np.median(student_df[exercise_cols].values),
+    'passed': np.sum(student_df[exercise_cols].values > 0),
+    'total': np.sum(student_df[exercise_cols].values),
     'regression slope': slope,
     'date 16': date_for_16,
     'date 20': date_for_20,
@@ -112,6 +121,10 @@ def process_student(enhanced_students_dataframe, student):
 
 def main(args):
   filename, student = args
+
+  if student == DataFrameEnums.SPECIAL_AVERAGE_STUDENT_LABEL:
+    student = DataFrameEnums.SPECIAL_AVERAGE_STUDENT_ROW_ID
+
   # TODO: Add support for "average" STUDENT !!!
   # TODO: Also student is probably id which can be found in "student" column not its position!!! CHECK
   students_df = build_dataframe(filename)
