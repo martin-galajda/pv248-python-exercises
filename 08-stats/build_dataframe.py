@@ -46,13 +46,12 @@ def with_aggregated_columns(students_dataframe, columns_without_student_col):
     new_col_exercise = DataFrameEnums.EXERCISES_PREFIX + orig_col_exercise
     new_col_orig = DataFrameEnums.DEADLINES_PREFIX + orig_col
     
-    curr_value += enhanced_students_dataframe[orig_col].mean()
-
-    enhanced_students_dataframe.loc[avg_student_row_idx][orig_col] = enhanced_students_dataframe[orig_col].mean()
-    enhanced_students_dataframe.loc[avg_student_row_idx][new_col_orig] = enhanced_students_dataframe[orig_col].mean()
-
     select_avg_student_row_flags = enhanced_students_dataframe.index.isin([avg_student_row_idx])
 
+    curr_value += enhanced_students_dataframe[~select_avg_student_row_flags][orig_col].mean()
+
+    enhanced_students_dataframe.loc[avg_student_row_idx][orig_col] = enhanced_students_dataframe[~select_avg_student_row_flags][orig_col].mean()
+    enhanced_students_dataframe.loc[avg_student_row_idx][new_col_orig] = enhanced_students_dataframe[~select_avg_student_row_flags][orig_col].mean()
     enhanced_students_dataframe.loc[avg_student_row_idx][new_col_date] = enhanced_students_dataframe[~select_avg_student_row_flags][new_col_date].mean()
     enhanced_students_dataframe.loc[avg_student_row_idx][new_col_exercise] = enhanced_students_dataframe.loc[~select_avg_student_row_flags][new_col_exercise].mean()
 
