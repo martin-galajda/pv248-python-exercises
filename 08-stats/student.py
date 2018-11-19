@@ -66,23 +66,7 @@ def process_student(enhanced_students_dataframe, student):
   if y[-1] > 0:
     slope, _, _, _ = np.linalg.lstsq(X, y, rcond=-1)
     slope = slope[0]
-    # print(X)
-    # print(y)
 
-
-#         print(list(zip(X, y)))
-
-#         regressor = LinearRegression(fit_intercept=False).fit(X,y)
-      
-#         plt.plot(X, y, 'bo')
-#         plt.plot(X, a * X, 'r-')
-#         plt.show()
-      #print(list(map(lambda x: x[0], X)))
-      #print(len(list(map(lambda x: x[0], X))))
-#         print(len(y))
-      
-#         print(y)
-      
     date_for_16 = None
     date_for_20 = None
 
@@ -125,8 +109,6 @@ def main(args):
   if student == DataFrameEnums.SPECIAL_AVERAGE_STUDENT_LABEL:
     student = DataFrameEnums.SPECIAL_AVERAGE_STUDENT_ROW_ID
 
-  # TODO: Add support for "average" STUDENT !!!
-  # TODO: Also student is probably id which can be found in "student" column not its position!!! CHECK
   students_df = build_dataframe(filename)
   process_student(students_df, student)
 
