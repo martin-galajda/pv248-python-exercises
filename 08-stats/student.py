@@ -62,7 +62,7 @@ def process_student(enhanced_students_dataframe, student):
     y += [float(student_df[aggregated_col])]
 
   
-  slope = "inf"
+  slope = 0
   if y[-1] > 0:
     slope, _, _, _ = np.linalg.lstsq(X, y, rcond=-1)
     slope = slope[0]

@@ -110,7 +110,7 @@
   "passed": 0, 
   "median": 0.0, 
   "date 16": "inf", 
-  "regression slope": "inf", 
+  "regression slope": 0, 
   "total": 0.0, 
   "date 20": "inf", 
   "mean": 0.0
@@ -146,7 +146,7 @@
   "passed": 0, 
   "median": 0.0, 
   "date 16": "inf", 
-  "regression slope": "inf", 
+  "regression slope": 0, 
   "total": 0.0, 
   "date 20": "inf", 
   "mean": 0.0
@@ -380,7 +380,7 @@
   "passed": 0, 
   "median": 0.0, 
   "date 16": "inf", 
-  "regression slope": "inf", 
+  "regression slope": 0, 
   "total": 0.0, 
   "date 20": "inf", 
   "mean": 0.0
@@ -407,7 +407,7 @@
   "passed": 0, 
   "median": 0.0, 
   "date 16": "inf", 
-  "regression slope": "inf", 
+  "regression slope": 0, 
   "total": 0.0, 
   "date 20": "inf", 
   "mean": 0.0
@@ -488,7 +488,7 @@
   "passed": 0, 
   "median": 0.0, 
   "date 16": "inf", 
-  "regression slope": "inf", 
+  "regression slope": 0, 
   "total": 0.0, 
   "date 20": "inf", 
   "mean": 0.0
@@ -578,7 +578,7 @@
   "passed": 0, 
   "median": 0.0, 
   "date 16": "inf", 
-  "regression slope": "inf", 
+  "regression slope": 0, 
   "total": 0.0, 
   "date 20": "inf", 
   "mean": 0.0
@@ -623,7 +623,7 @@
   "passed": 0, 
   "median": 0.0, 
   "date 16": "inf", 
-  "regression slope": "inf", 
+  "regression slope": 0, 
   "total": 0.0, 
   "date 20": "inf", 
   "mean": 0.0
