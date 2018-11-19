@@ -1,0 +1,657 @@
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2019-01-18", 
+  "regression slope": 0.13023392962453312, 
+  "total": 8.5, 
+  "date 20": "2019-02-18", 
+  "mean": 1.2142857142857142
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2019-01-04", 
+  "regression slope": 0.1474346373107922, 
+  "total": 9.0, 
+  "date 20": "2019-01-31", 
+  "mean": 1.2857142857142858
+}
+{
+  "passed": 6, 
+  "median": 2.0, 
+  "date 16": "2018-12-13", 
+  "regression slope": 0.1845881659131118, 
+  "total": 11.0, 
+  "date 20": "2019-01-04", 
+  "mean": 1.5714285714285714
+}
+{
+  "passed": 6, 
+  "median": 2.0, 
+  "date 16": "2018-12-14", 
+  "regression slope": 0.18376908459471855, 
+  "total": 11.0, 
+  "date 20": "2019-01-04", 
+  "mean": 1.5714285714285714
+}
+{
+  "passed": 3, 
+  "median": 0.0, 
+  "date 16": "2019-03-02", 
+  "regression slope": 0.0967171220758797, 
+  "total": 5.5, 
+  "date 20": "2019-04-12", 
+  "mean": 0.7857142857142857
+}
+{
+  "passed": 4, 
+  "median": 1.5, 
+  "date 16": "2019-02-10", 
+  "regression slope": 0.10998623943385097, 
+  "total": 6.5, 
+  "date 20": "2019-03-18", 
+  "mean": 0.9285714285714286
+}
+{
+  "passed": 4, 
+  "median": 1.5, 
+  "date 16": "2019-02-07", 
+  "regression slope": 0.11264006290544525, 
+  "total": 6.5, 
+  "date 20": "2019-03-14", 
+  "mean": 0.9285714285714286
+}
+{
+  "passed": 4, 
+  "median": 2.0, 
+  "date 16": "2019-01-04", 
+  "regression slope": 0.14808990236550681, 
+  "total": 8.0, 
+  "date 20": "2019-01-31", 
+  "mean": 1.1428571428571428
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2019-01-04", 
+  "regression slope": 0.14723805779437785, 
+  "total": 9.0, 
+  "date 20": "2019-01-31", 
+  "mean": 1.2857142857142858
+}
+{
+  "passed": 6, 
+  "median": 1.5, 
+  "date 16": "2018-12-20", 
+  "regression slope": 0.1717777340934408, 
+  "total": 10.5, 
+  "date 20": "2019-01-12", 
+  "mean": 1.5
+}
+{
+  "passed": 4, 
+  "median": 1.5, 
+  "date 16": "2019-01-31", 
+  "regression slope": 0.11834086888146253, 
+  "total": 7.0, 
+  "date 20": "2019-03-06", 
+  "mean": 1.0
+}
+{
+  "passed": 6, 
+  "median": 1.5, 
+  "date 16": "2018-12-26", 
+  "regression slope": 0.16031059563593472, 
+  "total": 10.0, 
+  "date 20": "2019-01-20", 
+  "mean": 1.4285714285714286
+}
+{
+  "passed": 0, 
+  "median": 0.0, 
+  "date 16": "inf", 
+  "regression slope": "inf", 
+  "total": 0.0, 
+  "date 20": "inf", 
+  "mean": 0.0
+}
+{
+  "passed": 4, 
+  "median": 2.0, 
+  "date 16": "2019-01-20", 
+  "regression slope": 0.12843195072406788, 
+  "total": 8.0, 
+  "date 20": "2019-02-20", 
+  "mean": 1.1428571428571428
+}
+{
+  "passed": 4, 
+  "median": 1.5, 
+  "date 16": "2019-01-31", 
+  "regression slope": 0.11834086888146253, 
+  "total": 7.0, 
+  "date 20": "2019-03-06", 
+  "mean": 1.0
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2019-01-31", 
+  "regression slope": 0.11824257912325534, 
+  "total": 8.0, 
+  "date 20": "2019-03-06", 
+  "mean": 1.1428571428571428
+}
+{
+  "passed": 0, 
+  "median": 0.0, 
+  "date 16": "inf", 
+  "regression slope": "inf", 
+  "total": 0.0, 
+  "date 20": "inf", 
+  "mean": 0.0
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2019-01-21", 
+  "regression slope": 0.12708865736190286, 
+  "total": 8.0, 
+  "date 20": "2019-02-22", 
+  "mean": 1.1428571428571428
+}
+{
+  "passed": 4, 
+  "median": 1.5, 
+  "date 16": "2019-02-10", 
+  "regression slope": 0.11015005569752964, 
+  "total": 7.5, 
+  "date 20": "2019-03-18", 
+  "mean": 1.0714285714285714
+}
+{
+  "passed": 5, 
+  "median": 2.0, 
+  "date 16": "2018-12-31", 
+  "regression slope": 0.15349583906690253, 
+  "total": 9.5, 
+  "date 20": "2019-01-26", 
+  "mean": 1.3571428571428572
+}
+{
+  "passed": 3, 
+  "median": 0.0, 
+  "date 16": "2019-03-25", 
+  "regression slope": 0.08479129808007338, 
+  "total": 6.0, 
+  "date 20": "2019-05-11", 
+  "mean": 0.8571428571428571
+}
+{
+  "passed": 4, 
+  "median": 1.5, 
+  "date 16": "2019-02-02", 
+  "regression slope": 0.11663717973920451, 
+  "total": 7.5, 
+  "date 20": "2019-03-08", 
+  "mean": 1.0714285714285714
+}
+{
+  "passed": 5, 
+  "median": 2.0, 
+  "date 16": "2018-12-25", 
+  "regression slope": 0.16253849682196447, 
+  "total": 9.5, 
+  "date 20": "2019-01-19", 
+  "mean": 1.3571428571428572
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2019-01-04", 
+  "regression slope": 0.14723805779437785, 
+  "total": 9.0, 
+  "date 20": "2019-01-31", 
+  "mean": 1.2857142857142858
+}
+{
+  "passed": 6, 
+  "median": 2.0, 
+  "date 16": "2018-12-08", 
+  "regression slope": 0.19605530437061788, 
+  "total": 11.5, 
+  "date 20": "2018-12-29", 
+  "mean": 1.6428571428571428
+}
+{
+  "passed": 5, 
+  "median": 2.0, 
+  "date 16": "2018-12-31", 
+  "regression slope": 0.15349583906690253, 
+  "total": 9.5, 
+  "date 20": "2019-01-26", 
+  "mean": 1.3571428571428572
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2019-01-05", 
+  "regression slope": 0.14671384575060611, 
+  "total": 9.0, 
+  "date 20": "2019-02-01", 
+  "mean": 1.2857142857142858
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2019-01-03", 
+  "regression slope": 0.1494987222331433, 
+  "total": 8.5, 
+  "date 20": "2019-01-29", 
+  "mean": 1.2142857142857142
+}
+{
+  "passed": 4, 
+  "median": 1.5, 
+  "date 16": "2019-02-17", 
+  "regression slope": 0.10517004128169843, 
+  "total": 7.0, 
+  "date 20": "2019-03-27", 
+  "mean": 1.0
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2019-01-04", 
+  "regression slope": 0.1476312168272066, 
+  "total": 9.0, 
+  "date 20": "2019-01-31", 
+  "mean": 1.2857142857142858
+}
+{
+  "passed": 3, 
+  "median": 0.0, 
+  "date 16": "2019-05-03", 
+  "regression slope": 0.07037546687635149, 
+  "total": 4.5, 
+  "date 20": "2019-06-29", 
+  "mean": 0.6428571428571429
+}
+{
+  "passed": 5, 
+  "median": 2.0, 
+  "date 16": "2018-12-27", 
+  "regression slope": 0.15890177576829825, 
+  "total": 9.5, 
+  "date 20": "2019-01-21", 
+  "mean": 1.3571428571428572
+}
+{
+  "passed": 6, 
+  "median": 2.0, 
+  "date 16": "2018-12-08", 
+  "regression slope": 0.196776095930804, 
+  "total": 11.5, 
+  "date 20": "2018-12-28", 
+  "mean": 1.6428571428571428
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2019-01-31", 
+  "regression slope": 0.11824257912325534, 
+  "total": 8.0, 
+  "date 20": "2019-03-06", 
+  "mean": 1.1428571428571428
+}
+{
+  "passed": 3, 
+  "median": 0.0, 
+  "date 16": "2019-03-13", 
+  "regression slope": 0.09042657755061921, 
+  "total": 5.5, 
+  "date 20": "2019-04-27", 
+  "mean": 0.7857142857142857
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2018-12-26", 
+  "regression slope": 0.16096586069064936, 
+  "total": 9.0, 
+  "date 20": "2019-01-20", 
+  "mean": 1.2857142857142858
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2019-01-04", 
+  "regression slope": 0.14723805779437785, 
+  "total": 9.0, 
+  "date 20": "2019-01-31", 
+  "mean": 1.2857142857142858
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2019-01-10", 
+  "regression slope": 0.14012843195072408, 
+  "total": 9.0, 
+  "date 20": "2019-02-07", 
+  "mean": 1.2857142857142858
+}
+{
+  "passed": 3, 
+  "median": 0.0, 
+  "date 16": "2019-02-11", 
+  "regression slope": 0.10890505209357183, 
+  "total": 6.0, 
+  "date 20": "2019-03-20", 
+  "mean": 0.8571428571428571
+}
+{
+  "passed": 6, 
+  "median": 1.5, 
+  "date 16": "2018-12-20", 
+  "regression slope": 0.17197431360985518, 
+  "total": 10.5, 
+  "date 20": "2019-01-12", 
+  "mean": 1.5
+}
+{
+  "passed": 5, 
+  "median": 2.0, 
+  "date 16": "2018-12-23", 
+  "regression slope": 0.1657820588428019, 
+  "total": 10.0, 
+  "date 20": "2019-01-16", 
+  "mean": 1.4285714285714286
+}
+{
+  "passed": 4, 
+  "median": 1.5, 
+  "date 16": "2019-01-18", 
+  "regression slope": 0.1301356398663259, 
+  "total": 7.5, 
+  "date 20": "2019-02-18", 
+  "mean": 1.0714285714285714
+}
+{
+  "passed": 0, 
+  "median": 0.0, 
+  "date 16": "inf", 
+  "regression slope": "inf", 
+  "total": 0.0, 
+  "date 20": "inf", 
+  "mean": 0.0
+}
+{
+  "passed": 6, 
+  "median": 2.0, 
+  "date 16": "2018-12-08", 
+  "regression slope": 0.196776095930804, 
+  "total": 11.5, 
+  "date 20": "2018-12-28", 
+  "mean": 1.6428571428571428
+}
+{
+  "passed": 4, 
+  "median": 1.5, 
+  "date 16": "2019-02-03", 
+  "regression slope": 0.11575257191533973, 
+  "total": 6.5, 
+  "date 20": "2019-03-09", 
+  "mean": 0.9285714285714286
+}
+{
+  "passed": 0, 
+  "median": 0.0, 
+  "date 16": "inf", 
+  "regression slope": "inf", 
+  "total": 0.0, 
+  "date 20": "inf", 
+  "mean": 0.0
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2019-01-03", 
+  "regression slope": 0.14936766922220035, 
+  "total": 8.5, 
+  "date 20": "2019-01-29", 
+  "mean": 1.2142857142857142
+}
+{
+  "passed": 3, 
+  "median": 0.0, 
+  "date 16": "2019-03-28", 
+  "regression slope": 0.08354629447611558, 
+  "total": 4.5, 
+  "date 20": "2019-05-15", 
+  "mean": 0.6428571428571429
+}
+{
+  "passed": 4, 
+  "median": 1.5, 
+  "date 16": "2019-01-30", 
+  "regression slope": 0.1192254767053273, 
+  "total": 7.0, 
+  "date 20": "2019-03-04", 
+  "mean": 1.0
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2018-12-29", 
+  "regression slope": 0.1554943974837822, 
+  "total": 9.0, 
+  "date 20": "2019-01-24", 
+  "mean": 1.2857142857142858
+}
+{
+  "passed": 4, 
+  "median": 1.5, 
+  "date 16": "2019-01-13", 
+  "regression slope": 0.13629513138064347, 
+  "total": 7.5, 
+  "date 20": "2019-02-11", 
+  "mean": 1.0714285714285714
+}
+{
+  "passed": 4, 
+  "median": 1.5, 
+  "date 16": "2019-01-16", 
+  "regression slope": 0.1323963043050914, 
+  "total": 7.0, 
+  "date 20": "2019-02-16", 
+  "mean": 1.0
+}
+{
+  "passed": 5, 
+  "median": 2.0, 
+  "date 16": "2018-12-13", 
+  "regression slope": 0.18544001048424086, 
+  "total": 10.0, 
+  "date 20": "2019-01-03", 
+  "mean": 1.4285714285714286
+}
+{
+  "passed": 1, 
+  "median": 0.0, 
+  "date 16": "2019-09-19", 
+  "regression slope": 0.0436406526439945, 
+  "total": 2.0, 
+  "date 20": "2019-12-20", 
+  "mean": 0.2857142857142857
+}
+{
+  "passed": 0, 
+  "median": 0.0, 
+  "date 16": "inf", 
+  "regression slope": "inf", 
+  "total": 0.0, 
+  "date 20": "inf", 
+  "mean": 0.0
+}
+{
+  "passed": 4, 
+  "median": 1.5, 
+  "date 16": "2019-02-01", 
+  "regression slope": 0.11696481226656183, 
+  "total": 7.5, 
+  "date 20": "2019-03-07", 
+  "mean": 1.0714285714285714
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2018-12-26", 
+  "regression slope": 0.16096586069064936, 
+  "total": 9.0, 
+  "date 20": "2019-01-20", 
+  "mean": 1.2857142857142858
+}
+{
+  "passed": 6, 
+  "median": 2.0, 
+  "date 16": "2018-12-08", 
+  "regression slope": 0.19605530437061788, 
+  "total": 11.5, 
+  "date 20": "2018-12-29", 
+  "mean": 1.6428571428571428
+}
+{
+  "passed": 3, 
+  "median": 0.0, 
+  "date 16": "2019-03-04", 
+  "regression slope": 0.09553764497739334, 
+  "total": 5.0, 
+  "date 20": "2019-04-15", 
+  "mean": 0.7142857142857143
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2018-12-26", 
+  "regression slope": 0.16096586069064936, 
+  "total": 9.0, 
+  "date 20": "2019-01-20", 
+  "mean": 1.2857142857142858
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2019-01-08", 
+  "regression slope": 0.1417010680820392, 
+  "total": 9.0, 
+  "date 20": "2019-02-06", 
+  "mean": 1.2857142857142858
+}
+{
+  "passed": 4, 
+  "median": 2.0, 
+  "date 16": "2019-01-20", 
+  "regression slope": 0.12843195072406788, 
+  "total": 8.0, 
+  "date 20": "2019-02-20", 
+  "mean": 1.1428571428571428
+}
+{
+  "passed": 6, 
+  "median": 1.5, 
+  "date 16": "2018-12-26", 
+  "regression slope": 0.16031059563593472, 
+  "total": 10.0, 
+  "date 20": "2019-01-20", 
+  "mean": 1.4285714285714286
+}
+{
+  "passed": 1, 
+  "median": 0.0, 
+  "date 16": "2020-02-02", 
+  "regression slope": 0.03184588165913112, 
+  "total": 1.5, 
+  "date 20": "2020-06-07", 
+  "mean": 0.21428571428571427
+}
+{
+  "passed": 0, 
+  "median": 0.0, 
+  "date 16": "inf", 
+  "regression slope": "inf", 
+  "total": 0.0, 
+  "date 20": "inf", 
+  "mean": 0.0
+}
+{
+  "passed": 2, 
+  "median": 0.0, 
+  "date 16": "2019-09-14", 
+  "regression slope": 0.044230391193237656, 
+  "total": 3.5, 
+  "date 20": "2019-12-14", 
+  "mean": 0.5
+}
+{
+  "passed": 4, 
+  "median": 1.5, 
+  "date 16": "2019-02-27", 
+  "regression slope": 0.09838804796540199, 
+  "total": 7.0, 
+  "date 20": "2019-04-09", 
+  "mean": 1.0
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2019-01-12", 
+  "regression slope": 0.1377039512482799, 
+  "total": 8.0, 
+  "date 20": "2019-02-10", 
+  "mean": 1.1428571428571428
+}
+{
+  "passed": 4, 
+  "median": 1.5, 
+  "date 16": "2019-02-19", 
+  "regression slope": 0.10359740515038332, 
+  "total": 7.0, 
+  "date 20": "2019-03-30", 
+  "mean": 1.0
+}
+{
+  "passed": 0, 
+  "median": 0.0, 
+  "date 16": "inf", 
+  "regression slope": "inf", 
+  "total": 0.0, 
+  "date 20": "inf", 
+  "mean": 0.0
+}
+{
+  "passed": 5, 
+  "median": 1.5, 
+  "date 16": "2019-01-04", 
+  "regression slope": 0.14723805779437785, 
+  "total": 9.0, 
+  "date 20": "2019-01-31", 
+  "mean": 1.2857142857142858
+}
+{
+  "passed": 6, 
+  "median": 2.0, 
+  "date 16": "2018-12-13", 
+  "regression slope": 0.18448987615490464, 
+  "total": 11.0, 
+  "date 20": "2019-01-04", 
+  "mean": 1.5714285714285714
+}
+{
+  "passed": 6, 
+  "median": 1.2430555555555556, 
+  "date 16": "2019-01-29", 
+  "regression slope": 0.12003917228354484, 
+  "total": 7.312499999999999, 
+  "date 20": "2019-03-03", 
+  "mean": 1.044642857142857
+}
