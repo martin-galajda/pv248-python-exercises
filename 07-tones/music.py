@@ -27,7 +27,7 @@ def frequency_to_tone(fundamental_freq, freq):
   if octaves_diff >= 0:
     tone = tone.lower() + ("'" * octaves_diff)
   else:
-    tone = tone + (',' * (-1 * octaves_diff))
+    tone = tone + (',' * (-1 * octaves_diff - 1))
 
   return '{}{:+d}'.format(tone, cents)
 
@@ -109,7 +109,7 @@ def parse_tones_from_file(fundamental_freq, filename):
     if total_seconds >= 1:
       last_ten_windows_frames_bytes = parse_frames(wave_file_handle, frames_per_second, num_of_seconds = 1.0, num_of_channels = number_of_channels)
 
-    while from_window_time + 1 <= total_seconds:
+    while from_window_time + 1 < total_seconds:
       if from_window_time + 1 > total_seconds:
         continue
       clustered_peaks = []
