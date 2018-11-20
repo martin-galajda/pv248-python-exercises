@@ -30,11 +30,12 @@ def main(args):
   filename, mode = args
   mode_prefix = get_mode_prefix(mode)
 
-  students_df = build_dataframe(filename)
+  students_df = build_dataframe(filename, with_average_student=False)
   regexp_extract_key = r"%s(.*)"
 
   new_cols_flags = [re.match(pattern=regexp_extract_key % mode_prefix, string = new_col) is not None for new_col in students_df.columns]
   new_cols = students_df.columns[new_cols_flags]
+
 
   dict_res = {}
   for new_col in new_cols:
