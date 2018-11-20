@@ -9,3 +9,4 @@ __pycache__
 
 06-fft/*.wav
 08-stats/*.txt
+08-stats/points.csv
