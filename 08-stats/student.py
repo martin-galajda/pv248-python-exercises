@@ -67,20 +67,12 @@ def process_student(enhanced_students_dataframe, student):
     slope, _, _, _ = np.linalg.lstsq(X, y, rcond=-1)
     slope = slope[0]
 
-    date_for_16 = None
-    date_for_20 = None
+    days_after_semester_start_to_gain_16_pts = int(16.0 / slope)
+    days_after_semester_start_to_gain_20_pts = int(20.0 / slope)
 
-    i = 1
-    while date_for_16 is None or date_for_20 is None:
-      # value_predicted = regressor.predict([[i]])
-      value_predicted = slope * i
-      if value_predicted >= 16.0 and date_for_16 is None:
-        date_for_16 = add_days(semester_start_date, i).strftime(datetime_format)
+    date_for_16 = add_days(semester_start_date, days_after_semester_start_to_gain_16_pts).strftime(datetime_format)
+    date_for_20 = add_days(semester_start_date, days_after_semester_start_to_gain_20_pts).strftime(datetime_format)
 
-      if value_predicted >= 20.0 and date_for_20 is None:
-        date_for_20 = add_days(semester_start_date, i).strftime(datetime_format)
-
-      i += 1
           
   else:
     date_for_16 = "inf"
