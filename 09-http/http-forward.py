@@ -11,7 +11,7 @@ def main(args):
 
   app.add_routes([web.get('/{whatever}', get_handler)])
   app.add_routes([web.get('/', get_handler)])
-  app.add_routes([web.post('/', make_post_handler(forward_site))])
+  app.add_routes([web.post('/', make_post_handler())])
 
   web.run_app(app, port = int(port))
 
