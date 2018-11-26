@@ -1,7 +1,6 @@
 from aiohttp import web
 import urllib.request
 import json
-import zlib
 import re
 
 DEFAULT_POST_HEADERS = {
@@ -40,7 +39,7 @@ def send_response(body_content_dict, headers):
 
   return web.Response(body=response_body_bytes, headers=headers)
 
-def perform_req(url, headers, timeout, body, method):
+def forward_request(url, headers, timeout, body, method):
   if method == "POST":
     headers = merge_dicts(headers, OVERRIDE_POST_HEADERS)
     req = urllib.request.Request(url, headers=headers)
@@ -49,12 +48,10 @@ def perform_req(url, headers, timeout, body, method):
     json_data_bytes = json_data.encode('utf-8')  # needs to be bytes
     req.add_header('Content-Length', len(json_data_bytes))
 
-    response = urllib.request.urlopen(req, json_data_bytes, timeout=timeout)
     urlopen_kargs = {
       'timeout': timeout
     }
     urlopen_args = [req, json_data_bytes]
-
   elif method == "GET":
     headers = merge_dicts(headers, OVERRIDE_GET_HEADERS)
     req = urllib.request.Request(url, headers=headers)
@@ -116,13 +113,12 @@ def make_get_handler(forward_site):
     if forwarded_headers['Host'] and re.match('.*localhost.*|.*127.0.0.1.*|.*0.0.0.0.*', forwarded_headers['Host']):
       del forwarded_headers['Host']
 
-    return perform_req(forward_site + request.path_qs, forwarded_headers, 1, None, 'GET')
+    return forward_request(forward_site + request.path_qs, forwarded_headers, 1, None, 'GET')
 
   return get_handler
 
-def make_post_handler(forward_site):
+def make_post_handler():
   async def post_handler(request):
-
     try:
       json = await request.json()
     except Exception:
@@ -143,7 +139,7 @@ def make_post_handler(forward_site):
         'code': 'invalid json'
       }, [])
 
-    return perform_req(url, headers, timeout, content, type)
+    return forward_request(url, headers, timeout, content, type)
 
 
   return post_handler
