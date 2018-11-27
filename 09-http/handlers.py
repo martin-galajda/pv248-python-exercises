@@ -71,6 +71,15 @@ def forward_request(url, headers, timeout, body, method):
   if not re.match('http://.*|https://.*', url):
     url = 'http://' + url
 
+  # disable SSL validation (for invalid SSL certificates)
+  request_ctx = ssl.create_default_context()
+  request_ctx.check_hostname = False
+  request_ctx.verify_mode = ssl.CERT_NONE
+  urlopen_kargs = {
+    'context': request_ctx,
+    'timeout': timeout
+  }
+
   if method == "POST":
     headers = merge_dicts(DEFAULT_POST_HEADERS, headers)
     headers = merge_dicts(headers, OVERRIDE_POST_HEADERS)
@@ -80,16 +89,10 @@ def forward_request(url, headers, timeout, body, method):
     json_data_bytes = json_data.encode('utf-8')  # needs to be bytes
     req.add_header('Content-Length', len(json_data_bytes))
 
-    urlopen_kargs = {
-      'timeout': timeout
-    }
     urlopen_args = [req, json_data_bytes]
   elif method == "GET":
     headers = merge_dicts(headers, OVERRIDE_GET_HEADERS)
     req = urllib.request.Request(url, headers=headers)
-    urlopen_kargs = {
-      'timeout': timeout
-    }
     urlopen_args = [req]
 
   else:
@@ -106,7 +109,6 @@ def forward_request(url, headers, timeout, body, method):
     })
 
   response_content = response.read()
-
   response_content = response_content.decode('utf-8')
   try:
     response_body = {
@@ -133,7 +135,7 @@ def forward_request(url, headers, timeout, body, method):
 def make_get_handler(forward_site):
   forward_site = forward_site.strip('/')
   async def get_handler(request):
-    forwarded_headers = dict(request.headers.copy())
+    forwarded_headers = copy.deepcopy(dict(request.headers.copy()))
     if forwarded_headers['Host'] and re.match('.*localhost.*|.*127.0.0.1.*|.*0.0.0.0.*', forwarded_headers['Host']):
       del forwarded_headers['Host']
 
