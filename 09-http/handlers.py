@@ -2,7 +2,11 @@ from aiohttp import web
 import urllib.request
 import json
 import re
+import copy
+import ssl, socket
 
+
+DEFAULT_TIMEOUT = 1
 DEFAULT_POST_HEADERS = {
   'Content-Type': 'application/json; charset=utf-8'
 }
@@ -16,21 +20,45 @@ OVERRIDE_GET_HEADERS = {
 }
 
 DEFAULT_JSON_POST_HANDLER = {
-  'timeout': 1,
+  'timeout': DEFAULT_TIMEOUT,
   'type': 'GET',
   'content': None,
   'url': None,
   'headers': DEFAULT_POST_HEADERS,
 }
 
-STRIP_UPSTREAM_HEADERS = ['content-length', 'transfer-encoding', 'content-encoding', 'content-type']
+def validate_ssl(response):
+  host = urllib.parse.urlparse(response.geturl()).netloc
+  port = 443
+  ctx = ssl.create_default_context()
+  s = ctx.wrap_socket(socket.socket(), server_hostname=host)
+
+  try:
+    s.connect((host, port))
+  except:
+    return False, None
+
+  certificate = s.getpeercert()
+  names_list = [subjectAltName[1] for subjectAltName in certificate['subjectAltName']]
+  return True, names_list
+
+
+def parse_response_headers(response):
+  parsed_headers = {}
+  for header in response.getheaders():
+    header_key, header_value = header
+
+    parsed_headers[header_key] = header_value
+
+  return parsed_headers
 
 def merge_dicts(dict_one,  dict_two):
-  merged = dict_one.copy()
+  merged = copy.deepcopy(dict_one)
   merged.update(dict_two)
   return merged
 
-def send_response(body_content_dict, headers):
+def send_response(body_content_dict):
+  headers = []
   if 'code' not in body_content_dict:
     body_content_dict['code'] = 200
   response_body_bytes = bytes(json.dumps(body_content_dict, indent=2), encoding='utf8')
@@ -40,7 +68,11 @@ def send_response(body_content_dict, headers):
   return web.Response(body=response_body_bytes, headers=headers)
 
 def forward_request(url, headers, timeout, body, method):
+  if not re.match('http://.*|https://.*', url):
+    url = 'http://' + url
+
   if method == "POST":
+    headers = merge_dicts(DEFAULT_POST_HEADERS, headers)
     headers = merge_dicts(headers, OVERRIDE_POST_HEADERS)
     req = urllib.request.Request(url, headers=headers)
 
@@ -63,47 +95,39 @@ def forward_request(url, headers, timeout, body, method):
   else:
     return send_response({
       'code': 'invalid json'
-    }, [])
+    })
 
   try:
     response = urllib.request.urlopen(*urlopen_args, **urlopen_kargs)
   except Exception as e:
+    print(str(e))
     return send_response({
       'code': 'timeout'
-    }, [])
+    })
 
   response_content = response.read()
 
-  return_headers = []
-  orig_resp_content_type = ''
-
-  for header in response.getheaders():
-    header_key, header_value = header
-    if header_key.lower() == 'content-type':
-      orig_resp_content_type = header[1]
-
-    if header_key.lower() not in STRIP_UPSTREAM_HEADERS:
-      return_headers += [(header_key, header_value)]
-
   response_content = response_content.decode('utf-8')
-  if re.match('.*json.*', orig_resp_content_type) is not None:
-    try:
-      response_body = {
-        'json': json.loads(response_content), 
-        'code': response.getcode()
-      }
-    except Exception:
-      response_body = {
-        'content': str(response_content),
-        'code': response.getcode()
-      }
-  else:
+  try:
+    response_body = {
+      'json': json.loads(response_content), 
+      'code': response.getcode(),
+      'headers': parse_response_headers(response)
+    }
+  except Exception:
     response_body = {
       'content': str(response_content),
-      'code': response.getcode()
+      'code': response.getcode(),
+      'headers': parse_response_headers(response)
     }
 
-  return send_response(body_content_dict=response_body, headers=return_headers)
+  if url.startswith('https'):
+    certificate_valid, names = validate_ssl(response)
+    response_body['certificate valid'] = certificate_valid
+    if names:
+      response_body['certificate for'] = names
+
+  return send_response(body_content_dict=response_body)
 
 
 def make_get_handler(forward_site):
@@ -113,7 +137,7 @@ def make_get_handler(forward_site):
     if forwarded_headers['Host'] and re.match('.*localhost.*|.*127.0.0.1.*|.*0.0.0.0.*', forwarded_headers['Host']):
       del forwarded_headers['Host']
 
-    return forward_request(forward_site + request.path_qs, forwarded_headers, 1, None, 'GET')
+    return forward_request(forward_site + request.path_qs, forwarded_headers, DEFAULT_TIMEOUT, None, 'GET')
 
   return get_handler
 
@@ -124,7 +148,7 @@ def make_post_handler():
     except Exception:
       return send_response({
         'code': 'invalid json'
-      }, [])
+      })
     json = merge_dicts(DEFAULT_JSON_POST_HANDLER, json)
 
     type = json['type']
@@ -137,7 +161,7 @@ def make_post_handler():
       # code: invalid json
       return send_response({
         'code': 'invalid json'
-      }, [])
+      })
 
     return forward_request(url, headers, timeout, content, type)
 
