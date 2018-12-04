@@ -19,8 +19,7 @@ def normalize_http_headers(headers):
 
   return normalized
 
-
-def process_cgi_env(request, server_name, port, req_method, path_to_script, query):
+def process_cgi_env(request, server_name, port, req_method, path_to_script, query, req_path):
   headers = normalize_http_headers(request.headers)
 
   env = copy.deepcopy(os.environ)
@@ -31,7 +30,7 @@ def process_cgi_env(request, server_name, port, req_method, path_to_script, quer
   env['SERVER_PORT'] = port
   env['REQUEST_METHOD'] = req_method
   env['PATH_INFO'] = ''
-  env['PATH_TRANSLATED'] = ''
+  env['PATH_TRANSLATED'] = req_path
   env['SCRIPT_NAME'] = path_to_script
   if query:
     env['QUERY_STRING'] = query
@@ -63,14 +62,21 @@ def process_cgi_env(request, server_name, port, req_method, path_to_script, quer
   if not env['CONTENT_TYPE']:
     env['CONTENT_TYPE'] = headers['content-type'] if 'content-type' in headers else ''
   if not env['CONTENT_LENGTH']:
-    env['CONTENT_LENGRH'] = headers['content-length'] if 'content-length' in headers else ''
+    env['CONTENT_LENGTH'] = headers['content-length'] if 'content-length' in headers else ''
 
   env = append_http_headers(env, request.headers)
+
+  print(env['CONTENT_TYPE'])
+  print(env['CONTENT_LENGTH'])
+
+  return env
 
 async def handle_cgi_req(dir_path, request, port, method):
   filepath = '"' + dir_path + request.path + '"'
 
-  resp = web.StreamResponse(status=200, reason='OK')
+  resp = web.StreamResponse(status=200, reason='OK', headers={
+    'Content-Type': 'text-plain; charset-utf-8'
+  })
 
   process = await asyncio.create_subprocess_shell(
     filepath,
@@ -78,7 +84,7 @@ async def handle_cgi_req(dir_path, request, port, method):
     stdout=asyncio.subprocess.PIPE,
     stdin=asyncio.subprocess.PIPE,
     # stdout=resp,
-    env=process_cgi_env(request, 'localhost', port, method, filepath, request.query_string)
+    env=process_cgi_env(request, 'localhost', port, method, filepath, request.query_string, request.path)
   )
 
   CHUNK_SIZE = 256
@@ -89,17 +95,9 @@ async def handle_cgi_req(dir_path, request, port, method):
   if method == 'POST':
     if request.can_read_body:
       reader = request.content
-      content_length = request.content_length
-      read_bytes = 0
+      data = await reader.read()
 
-      while read_bytes < content_length:
-        chunk = await reader.read(CHUNK_SIZE)
-        if not chunk:
-          await asyncio.sleep(1)
-          continue
-        read_bytes += len(chunk)
-        await process._feed_stdin(chunk)
-
+      await process._feed_stdin(data)
       process.stdin.drain()
       process.stdin.close()
 
@@ -118,7 +116,7 @@ async def handle_cgi_req(dir_path, request, port, method):
   return resp
 
 def handle_static_req(dir_path, request):
-  filepath = re.sub(os.linesep, '', dir_path + request.path)
+  filepath = dir_path + request.path
   return web.FileResponse(filepath)
 
 def make_get_handler(directory, port):
