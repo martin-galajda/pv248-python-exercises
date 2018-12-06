@@ -75,7 +75,7 @@ async def handle_cgi_req(dir_path, request, port, method):
   filepath = '"' + dir_path + request.path + '"'
 
   resp = web.StreamResponse(status=200, reason='OK', headers={
-    'Content-Type': 'text-plain; charset-utf-8'
+    'Content-Type': 'text/plain; charset-utf-8'
   })
 
   process = await asyncio.create_subprocess_shell(
