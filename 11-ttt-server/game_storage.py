@@ -49,18 +49,17 @@ class GameStorage():
     self.games = {}
     self.next_game_id = 0
 
-  def create_new_game(self, player1_name):
+  def create_new_game(self, game_name):
     new_game = {
       'id': self.next_game_id,
       'board': np.zeros(9, dtype=np.int32).reshape(3, 3),
+      'name': game_name,
       'player_1': {
-        'name': player1_name,
         PRECOMPUTED_ROWS_SCORE_KEY: np.zeros(3, dtype=np.int32),
         PRECOMPUTED_COLS_SCORE_KEY: np.zeros(3, dtype=np.int32),
         PRECOMPUTED_DIAGONALS_SCORE_KEY: np.zeros(2, dtype=np.int32),
       },
       'player_2': {
-        'name': None,
         PRECOMPUTED_ROWS_SCORE_KEY: np.zeros(3, dtype=np.int32),
         PRECOMPUTED_COLS_SCORE_KEY: np.zeros(3, dtype=np.int32),
         PRECOMPUTED_DIAGONALS_SCORE_KEY: np.zeros(2, dtype=np.int32),
@@ -71,17 +70,6 @@ class GameStorage():
     self.next_game_id += 1
 
     return new_game
-
-  def assign_game_to_player(self, player_name):
-    if self.next_game_id == 0:
-      return self.create_new_game(player_name)
-
-    if self.games[self.next_game_id - 1]['player_2']['name'] is None:
-      game = self.games[self.next_game_id - 1]
-      game['player_2']['name'] = player_name
-      return game
-    else:
-      return self.create_new_game(player_name)
 
   def get_game_by_id(self, game_id):
     if game_id in self.games:
@@ -129,12 +117,6 @@ class GameStorage():
         'status': "bad"
       }
 
-    if game['player_2']['name'] is None:
-      return {
-        'message': "Game has not started yet.",
-        'status': "bad"
-      }
-
     game_result = get_game_result(game)
     if not 'board' in game_result:
       return {
@@ -142,16 +124,16 @@ class GameStorage():
         'status': "bad"
       }
 
-    if game['board'][x, y] == 0:
-      self._update_game(game, x, y, player_id)
-      return {
-        'status': "ok"
-      }
-    else:
+    if game['board'][x, y] != 0:
       return {
         'message': "The field is already occupied.",
         'status': "bad"
       }
+    
+    self._update_game(game, x, y, player_id)
+    return {
+      'status': "ok"
+    }
 
   def game_exists(self, game_id):
     return game_id in self.games

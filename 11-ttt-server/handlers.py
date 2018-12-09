@@ -22,9 +22,9 @@ def send_client_error_response(json_data):
 def make_start_handler(storage):
   async def get_start_handler(request):
 
-    player_name = request.query['name'] if 'name' in request.query else ''
+    game_name = request.query['name'] if 'name' in request.query else ''
 
-    game = storage.assign_game_to_player(player_name)
+    game = storage.create_new_game(game_name)
 
     return send_ok_response({
       'game': game['id']
@@ -39,14 +39,14 @@ def make_status_handler(storage):
 
     if not 'game' in params:
       return send_client_error_response({
-        'reason': 'Missing game query parameter!'
+        'reason': 'Missing "game" query parameter!'
       })
 
     try:
       game_id = int(params['game'])
     except Exception:
       return send_client_error_response({
-        'reason': 'Invalid game query parameter! Expected positive integer.'
+        'reason': 'Invalid "game" query parameter! Expected positive integer.'
       })
 
 
@@ -67,22 +67,22 @@ def make_play_handler(storage):
 
     if not 'game' in params:
       return send_client_error_response({
-        'reason': 'Missing game query parameter!'
+        'reason': 'Missing "game" query parameter!'
       })
 
     if not 'x' in params:
       return send_client_error_response({
-        'reason': 'Missing x query parameter!'
+        'reason': 'Missing "x" query parameter!'
       })
 
     if not 'y' in params:
       return send_client_error_response({
-        'reason': 'Missing y query parameter!'
+        'reason': 'Missing "y" query parameter!'
       })
 
     if not 'player' in params:
       return send_client_error_response({
-        'reason': 'Missing player query parameter!'
+        'reason': 'Missing "player" query parameter!'
       })
 
     try:
@@ -92,7 +92,7 @@ def make_play_handler(storage):
       player_id = int(params['player'])
     except ValueError:
       return send_client_error_response({
-        'reason': 'game, x, y, player must be integers!'
+        'reason': 'Parameters "game", "x", "y", "player" must be integers!'
       })
 
 
