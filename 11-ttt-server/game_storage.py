@@ -36,7 +36,7 @@ def get_game_result(game):
 
   return {
     'board': board.tolist(),
-    'next_player': game[NEXT_PLAYER_KEY]
+    'next': game[NEXT_PLAYER_KEY]
   }
 
 PRECOMPUTED_ROWS_SCORE_KEY = 'precomputed_rows_score'

@@ -42,7 +42,13 @@ def make_status_handler(storage):
         'reason': 'Missing game query parameter!'
       })
 
-    game_id = int(params['game'])
+    try:
+      game_id = int(params['game'])
+    except Exception:
+      return send_client_error_response({
+        'reason': 'Invalid game query parameter! Expected positive integer.'
+      })
+
 
     if not storage.game_exists(game_id):
       return send_client_error_response({
