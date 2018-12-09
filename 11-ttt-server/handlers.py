@@ -4,12 +4,19 @@ import json
 def send_ok_response(json_data):
   response_body_bytes = bytes(json.dumps(json_data, indent=2), encoding='utf8')
 
-  return web.Response(status=200, body=response_body_bytes)
+  headers = {
+    'Content-Type': 'application/json; charset=utf-8'
+  }
+  return web.Response(status=200, body=response_body_bytes, headers=headers)
 
 def send_client_error_response(json_data):
   response_body_bytes = bytes(json.dumps(json_data, indent=2), encoding='utf8')
 
-  return web.Response(status=400, body=response_body_bytes)
+  headers = {
+    'Content-Type': 'application/json; charset=utf-8'
+  }
+
+  return web.Response(status=400, body=response_body_bytes, headers=headers)
 
 
 def make_start_handler(storage):
