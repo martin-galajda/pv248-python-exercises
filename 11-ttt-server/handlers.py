@@ -27,7 +27,7 @@ def make_start_handler(storage):
     game = storage.create_new_game(game_name)
 
     return send_ok_response({
-      'game': game['id']
+      'id': game['id']
     })
 
   
