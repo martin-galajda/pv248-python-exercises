@@ -101,6 +101,12 @@ def make_play_handler(storage):
         'error': 'Game with id %d does not exist.' % game_id
       })
 
+    if player_id != 1 and player_id != 2:
+      return send_client_error_response({
+        'error': 'Invalid player id.'
+      })
+
+
     return send_ok_response(storage.make_move(game_id, x, y, player_id))
 
 
