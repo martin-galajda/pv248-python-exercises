@@ -1,6 +1,4 @@
 from aiohttp import web
-import urllib.request
-import json
 import re
 import copy
 import os
@@ -18,6 +16,12 @@ def normalize_http_headers(headers):
     normalized[header_key.lower()] = headers[header_key]
 
   return normalized
+
+def merge_dicts(dict_one,  dict_two):
+  merged = copy.deepcopy(dict_one)
+  merged.update(dict_two)
+  return merged
+
 
 def process_cgi_env(request, server_name, port, req_method, path_to_script, query, req_path):
   headers = normalize_http_headers(request.headers)
@@ -71,12 +75,27 @@ def process_cgi_env(request, server_name, port, req_method, path_to_script, quer
 
   return env
 
+def is_stop_header_line(line):
+  if line.strip() == "" or line.strip() == "\n":
+    return True
+  return False
+
+def safely_parse_header(line):
+  REGEX = '(.+?):(.+)'
+  match = re.match(REGEX, line)
+
+  if match is None:
+    return {}
+
+  key, value = match.groups()
+  new_header = {
+    key: value
+  }
+
+  return new_header
+
 async def handle_cgi_req(dir_path, request, port, method):
   filepath = '"' + dir_path + request.path + '"'
-
-  resp = web.StreamResponse(status=200, reason='OK', headers={
-    'Content-Type': 'text/plain; charset=utf-8'
-  })
 
   process = await asyncio.create_subprocess_shell(
     filepath,
@@ -89,8 +108,6 @@ async def handle_cgi_req(dir_path, request, port, method):
 
   CHUNK_SIZE = 256
 
-  # The StreamResponse is a FSM. Enter it with a call to prepare.
-  await resp.prepare(request)
 
   if method == 'POST':
     if request.can_read_body:
@@ -101,8 +118,24 @@ async def handle_cgi_req(dir_path, request, port, method):
       process.stdin.drain()
       process.stdin.close()
 
+  headers_prepared = {}
+  resp = None
+
+  while resp is None:
+    line = await process.stdout.readline()
+    line = line.decode('utf-8')
+    if is_stop_header_line(line):
+      resp = web.StreamResponse(status=200, reason='OK', headers=headers_prepared)
+
+    parsed_header = safely_parse_header(line)
+    headers_prepared = merge_dicts(headers_prepared, parsed_header)
+
+  # The StreamResponse is a FSM. Enter it with a call to prepare.
+  await resp.prepare(request)
+
   while True:
     chunk = await process.stdout.read(CHUNK_SIZE)
+
     if not chunk:
       if process.returncode is None:
         # wait for one sec, maybe process is computing sth
