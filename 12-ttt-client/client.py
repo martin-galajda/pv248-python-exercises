@@ -112,16 +112,15 @@ def run_game_loop(server_address):
   games = get_list_of_games(server_address)
   games = show_games(games)
 
-  allowed_game_ids = map(lambda x: x['id'], games)
+  allowed_game_ids = list(map(lambda x: x['id'], games))
 
   game_to_join = None
-  while not game_to_join:
-    game_to_join = input("Enter 'id' of the game you would like to join or type 'new' for starting new one:")
+  game_joined = None
+  while not game_joined:
+    game_to_join = input("Enter 'id' of the game you would like to join or type 'new' for starting new one:\n")
 
     if game_to_join.strip() == 'new':
-      new_game_name = input("Enter name of the new game:")
-
-      print(new_game_name)
+      new_game_name = input("Enter name of the new game:\n")
 
       game_joined = create_new_game(server_address, new_game_name)
       player_idx = 1
@@ -171,7 +170,7 @@ def run_game_loop(server_address):
   winner = game_status['winner']
   if winner == player_idx:
     print("you win")
-  else:
+  elif winner != 0:
     print("you lose")
 
 def main(args):
