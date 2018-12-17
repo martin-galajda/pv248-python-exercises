@@ -1,8 +1,9 @@
 import sys
-from urllib import request
+from urllib import request, parse
 import json
 import os
 from time import sleep
+import re
 
 PLAYER_MARKS = {
   0: '_',
@@ -29,7 +30,8 @@ def get_list_of_games(server_address):
   response = request.urlopen(server_address + "/list")
 
   games = parse_json_response(response)
-  return games
+
+  return list(filter(lambda game: game['board_is_empty'] == True, games))
 
 def get_game_status(server_address, game_id):
   response = request.urlopen(server_address + ("/status?game=%d" % (game_id,)))
@@ -38,7 +40,7 @@ def get_game_status(server_address, game_id):
   return games
 
 def create_new_game(server_address, game_name):
-  response = request.urlopen(server_address + ("/start?name=%s" % (game_name,)))
+  response = request.urlopen(server_address + ("/start?name=%s" % (parse.quote(game_name),)))
   game = parse_json_response(response)
   return game
 
@@ -87,10 +89,8 @@ def parse_make_move_input(player_mark):
   return (x, y)
 
 def show_games(games):
-  print("Available games:")
-
   for game in games:
-    print("Game 'id': %d, game 'name': %s" % (game['id'], game['name']))
+    print("%d %s" % (game['id'], game['name']))
 
   return games
 
@@ -119,9 +119,8 @@ def run_game_loop(server_address):
   while not game_joined:
     game_to_join = input("Enter 'id' of the game you would like to join or type 'new' for starting new one:\n")
 
-    if game_to_join.strip() == 'new':
-      new_game_name = input("Enter name of the new game:\n")
-
+    if game_to_join.strip().startswith('new'):
+      new_game_name = re.sub('new ', '', game_to_join)
       game_joined = create_new_game(server_address, new_game_name)
       player_idx = 1
       player_mark = PLAYER_MARKS[player_idx]
@@ -149,7 +148,7 @@ def run_game_loop(server_address):
   while 'winner' not in game_status:
     if game_status['next'] != player_idx and not waiting_for_other_played_logged:
       print_board(game_status)
-      print("waiting for other player")
+      print("waiting for the other player")
       waiting_for_other_played_logged = True
 
     if game_status['next'] == player_idx:
@@ -172,6 +171,8 @@ def run_game_loop(server_address):
     print("you win")
   elif winner != 0:
     print("you lose")
+  else:
+    print("draw")
 
 def main(args):
   host, port = args

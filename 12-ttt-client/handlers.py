@@ -1,5 +1,6 @@
 from aiohttp import web
 import json
+import numpy as np
 
 def send_ok_response(json_data):
   response_body_bytes = bytes(json.dumps(json_data, indent=2), encoding='utf8')
@@ -36,7 +37,11 @@ def make_start_handler(storage):
 def make_list_handler(storage):
   async def list_handler(_):
 
-    formatted_games = list(map(lambda game_instance: { 'id': game_instance['id'], 'name': game_instance['name'] }, storage.games.values()))
+    formatted_games = list(map(lambda game_instance: { 
+      'id': game_instance['id'], 
+      'name': game_instance['name'],
+      'board_is_empty': len(np.where(game_instance['board'] == 0)[0]) == 9
+    }, storage.games.values()))
 
     return send_ok_response(formatted_games)
 
