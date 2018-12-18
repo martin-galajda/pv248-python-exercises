@@ -4,6 +4,7 @@ import json
 import os
 from time import sleep
 import re
+import numpy as np
 
 PLAYER_MARKS = {
   0: '_',
@@ -92,12 +93,22 @@ def show_games(games):
 
   return games
 
+def transpose_board(board):
+  new_board = np.zeros(9).reshape(3, 3)
+
+  for col_idx, col_values in enumerate(board):
+    for row_idx, row_value in enumerate(col_values):
+      new_board[row_idx][col_idx] = row_value
+
+  return new_board
+
 def print_board(game_status):
   str = ""
 
   if 'board' in game_status:
     board = game_status['board']
-    for row in board:
+    transposed_board = transpose_board(board)
+    for row in transposed_board:
       for col in row:
         mark = PLAYER_MARKS[col]
         str += "%s" % (mark,)
