@@ -72,11 +72,9 @@ def parse_make_move_input(player_mark):
 
     if x == None or y == None:
       input_parsed = False
-
-    if x >= 3 or x < 0:
+    elif x >= 3 or x < 0:
       input_parsed = False
-
-    if y >= 3 or y < 0:
+    elif y >= 3 or y < 0:
       input_parsed = False
 
 
@@ -105,7 +103,7 @@ def print_board(game_status):
         str += "%s" % (mark,)
 
       str += os.linesep
-    print(str)
+    print(str.strip(os.linesep))
 
 
 def run_game_loop(server_address):
@@ -120,7 +118,7 @@ def run_game_loop(server_address):
     game_to_join = input("Enter 'id' of the game you would like to join or type 'new' for starting new one:\n")
 
     if game_to_join.strip().startswith('new'):
-      new_game_name = re.sub('new ', '', game_to_join)
+      new_game_name = re.sub('new', '', game_to_join).strip()
       game_joined = create_new_game(server_address, new_game_name)
       player_idx = 1
       player_mark = PLAYER_MARKS[player_idx]
