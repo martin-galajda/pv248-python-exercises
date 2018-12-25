@@ -34,7 +34,7 @@ def parse_voice(print_instace, voice_str):
   else:
     voice = Voice(name=voice_str)
 
-  if voice is not None:
+  if voice is not None and voice.name:
     print_instace.edition.composition.voices += [voice]
 
 def parse_key(print_instance, key_str):
@@ -140,7 +140,7 @@ class ScoreLibParser:
   def load_print_blocks(self):
     self.print_blocks = []
     new_print_block = []
-    with open(self.filename) as f:
+    with open(self.filename, encoding='utf-8') as f:
       for line in f:
         if len(line.strip()) == 0:
           self.print_blocks += [new_print_block]

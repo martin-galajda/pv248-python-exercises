@@ -18,7 +18,7 @@ class Voice:
   def __init__(self, name, range = None, id = None, score = None, number = None):
     self.id = id
     self.score = score
-    self.name = name
+    self.name = name.strip()
     self.range = range
     self.number = number
   
