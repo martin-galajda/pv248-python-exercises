@@ -70,9 +70,6 @@ def process_cgi_env(request, server_name, port, req_method, path_to_script, quer
 
   env = append_http_headers(env, request.headers)
 
-  print(env['CONTENT_TYPE'])
-  print(env['CONTENT_LENGTH'])
-
   return env
 
 def is_stop_header_line(line):
@@ -97,6 +94,15 @@ def safely_parse_header(line):
 async def handle_cgi_req(dir_path, request, port, method):
   filepath = '"' + dir_path + request.path + '"'
 
+  if not os.path.exists(dir_path + request.path):
+    resp = web.StreamResponse(status=404)
+    return resp
+
+  if not os.access(dir_path + request.path, os.X_OK):
+    resp = web.StreamResponse(status=403)
+    return resp
+
+
   process = await asyncio.create_subprocess_shell(
     filepath,
     # stdout must a pipe to be accessible as process.stdout
@@ -117,6 +123,11 @@ async def handle_cgi_req(dir_path, request, port, method):
       await process._feed_stdin(data)
       process.stdin.drain()
       process.stdin.close()
+    else:
+      process.stdin.close()
+  else:
+    process.stdin.close()
+
 
   headers_prepared = {}
   resp = None
@@ -125,11 +136,17 @@ async def handle_cgi_req(dir_path, request, port, method):
     line = await process.stdout.readline()
     line = line.decode('utf-8')
     if is_stop_header_line(line):
-      resp = web.StreamResponse(status=200, reason='OK', headers=headers_prepared)
-
+      break
     parsed_header = safely_parse_header(line)
     headers_prepared = merge_dicts(headers_prepared, parsed_header)
 
+  parsed_header = safely_parse_header(line)
+  headers_prepared = merge_dicts(headers_prepared, parsed_header)
+  if not 'content-type' in list(map(lambda str: str.lower(), headers_prepared.keys())):
+    resp = web.StreamResponse(status=500)
+    return resp
+
+  resp = web.StreamResponse(status=200, reason='OK', headers=headers_prepared)
   # The StreamResponse is a FSM. Enter it with a call to prepare.
   await resp.prepare(request)
 
