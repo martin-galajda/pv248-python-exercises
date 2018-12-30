@@ -1,0 +1,64 @@
+review od 433826, *0.5, pacila sa mi pekna analyza kodu a vhodne pripomienky na vylepsenie
+
+Na zaciatok by som chcel pochvalit vyjadrovanie tvojej aktualnej emocie a mimiky tvare pouzivanim smajlikov v commit messages 
+
+*** HW01 stat.py***
+
+Velmi pekny vytvor, je vidiet ze v tejto oblasti pohybujes uz dlhsie a ma to nejaku uroven. Par pripomienok/pochval:
+
+
+---Velmi sa mi paci dokladne komentovanie tejto ulohy, pri reviewovani uloh ostatnych studentov som nieco take nenasiel a preto je to pre mna v tomto kontexte nieco vynimocne
+
+*for k, v in stats['century'].items():
+---Vo viacerych cykloch inicializujes premenne jednoslovnym nazvom napr "k" alebo "v" napriek tomu, ze je to riadiaca premenna for cyklu, je vhodnejsie pouzit iny nazov premennej, ktory by zodpovedal tomu co sa v danej premennej nachadza a bolo by z tohto nazvu jednoduche urcit vyznam tejto premennej
+
+---Asi by bolo rozumnejsie aby mal tvoj program formu main() funkcie 
+
+*composer_extra_stuff_1 a composer_extra_stuff_2 
+--- Toto nie su velmi stastne nazvy, neviem si moc predstavit co extra_stuff je. Informacie o zene a detoch composera? Disponuje composer specialnou schopnostou ktoru bezni smrtelnici nemaju alebo co ten extra_stuff je?
+
+
+*** HW05 eqn.py to_pretty_json.py ****
+
+---Kod je velmi pekny, obzvlast chvalim precizne pomenovanie premennych, vzdy som vedel co v ktorej premennej najdem a to pri pristupe studentov nebyva velmi bezne.
+
+---Asi by bolo vhodne kod rozdelit do mensich funkcii a nezvolit pristup napisat vsetko dokopy, takisto by bolo pekne keby tvoj program obsahoval nejaky ten main(). 
+
+---Myslim ze vytvorenie samostatneho suboru to_pretty_json.py je zbytocne pretoze tento subor obsahuje jednu funkciu s jednym riadkom, takze tato funkcia mohla byt sucastnou suboru eqn.py
+
+*EQUATION_REGEXP = r'(.*)=(.*)'
+--- To ze je premenna pomenovana velkymi pismenami vo mne inklinuje globalnost premnnej. Zvolil by som zapis v ktorom to explicitne potvrdis:
+global EQUATION_REGEXP
+EQUATION_REGEXP = ...
+
+--- '+', '-', '=' by som ulozil ako globalne premnne pretoze s nimi pracujes na viacerych miestach a pre pripadne rozsirenia je to vhodny postup
+
+
+
+*** HW08 *** 
+
+Veľmi sa mi páčilo rozdelenie kódu do viacerých súborov, ktoré prehľadne členia kód a umožnujú ľahšie pochopenie funkcionality bez toho aby som musel poznať zadanie problému ktorý táto úloha rieši.
+
+--Obcasne pouzitie nadbytocnych zatvoriek v podmienenych (asi to je len zo zvyku pri programovani v inych jazykoch)
+
+build_dataframe.py
+--V porovnaní s tvojimi spolužiakmi si zvolil zaujimavý spôsob riešenia tejto úlohy a vytvorením dataframe-u si si zjednodušil následnú prácu s načítanými dátami a to veľmi chválim.
+
+*enhanced_students_dataframe.loc[avg_student_row_idx][new_col_exercise] = enhanced_students_dataframe.loc[~select_avg_student_row_flags][new_col_exercise].mean()
+
+--Niektoré riadky kódu obsahovali až 166 znakov, čo mi príde naozaj veľa a pri prvom pohľade na takúto skupinu riadkov sa čitateľnosť znižuje. Naopak chválim precízne pomenovanie premenných, pretože si dokážem veľmi jednoducho predstaviť co sa v daných premenných nachádza. Nabudúce by som zvolil zlatú strednú cestu -
+znaky_na_riadku ~ pomenovanie_premennch
+
+--Na niektorých miestach mi chýbala dokumentácia kódu, ktorá by mi umožnila rýchlejšie pochopiť co sa na danom mieste deje
+
+*    date_for_16 = "inf"
+-- Môžeš nabudúce nahradiť *date_for_16 = math.inf 
+(A floating-point positive infinity. (For negative infinity, use -math.inf.) Equivalent to the output of float('inf'). New in version 3.5. -- https://docs.python.org/3/library/math.html)
+
+*# for i in range(0, 60):
+*#   main([sys.argv[1], i])
+
+*Zakomentovaný kód služiaci na testovanie (teda predpokladám) by sa asi v kóde pri odovdaní nemal nachádzať - prípadne by sa hodil komentár s popisom prečo tam tento kód zostal a akú plní úlohu, pretože niekomu kto to číta prvý krát to asi veľmi jasné nebude.
+
+*exercise_cols_flags = [re.match(pattern=regexp_extract_aggregated_date, string = new_col) is not None for new_col in enhanced_students_dataframe.columns]
+--K tomuto riadku by sa asi tiež hodil menší komentár s popisom
